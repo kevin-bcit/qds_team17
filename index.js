@@ -51,33 +51,34 @@ function reqLogin(req, res, next) {
 
 //#region PUBLIC PAGES
 //todo: change all route routes
-app.get("/", (req, res) => {
+app.get("/", function (req, res) {
+  console.log("THIS WORKING");
   let doc;
   if (!req.session.loggedIn) {
-    doc = fs.readFileSync("index.html", "utf8");
+    doc = fs.readFileSync("./frontend/dashboard.html", "utf8");
   } else {
-    doc = fs.readFileSync("dashboard.html", "utf8");
+    doc = fs.readFileSync("./frontend/index.html", "utf8");
   }
   res.send(doc);
 });
 
 app.get("/login", function (req, res) {
-  let doc = fs.readFileSync("login.html", "utf8");
+  let doc = fs.readFileSync("./frontend/login.html", "utf8");
   res.send(doc);
 });
 
 app.get("/signup", function (req, res) {
-  let doc = fs.readFileSync("signup.html", "utf8");
+  let doc = fs.readFileSync("./frontend/signup.html", "utf8");
   res.send(doc);
 });
 
 app.get("/dashboard", reqLogin, function (req, res) {
-  let doc = fs.readFileSync("dashboard.html", "utf8");
+  let doc = fs.readFileSync("./frontend/dashboard.html", "utf8");
   res.send(doc);
 });
 
-app.get("/community", reqLogin, function (req, res) {
-  let doc = fs.readFileSync("community.html", "utf8");
+app.get("/community", function (req, res) {
+  let doc = fs.readFileSync("./frontend/community.html", "utf8");
   res.send(doc);
 });
 
