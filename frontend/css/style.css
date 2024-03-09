@@ -82,6 +82,7 @@ h4, h5, h6{
 
 .title_underline{
     border-bottom:solid 1px var(--deep-color);
+    
 }
 
 
@@ -160,23 +161,23 @@ header p a{
     margin-right: 50px;
 }
 
-.top_icon{
+/* .top_icon{
     color: var(--font-color-3);
-    font-size: 1.5rem;
-}
+    font-size: 2rem;
+} */
 
-.fa-instagram{
+/* .fa-instagram{
     font-size: 1.7rem;
-}
+} */
 
 main, section, article{
     padding: 10px;
 }
 
 
-.fa-facebook{
+/* .fa-facebook{
     color: var(--font-color-3)
-}
+} */
 
 .off{
     display: none;
@@ -232,7 +233,6 @@ nav{
 
 
 .reverse_a{
-    
     color: var(--font-color-2);
     text-decoration:none;
     display: block;
@@ -281,6 +281,7 @@ nav{
     border: none;
     padding: 0px 0px;
     text-decoration: none;
+    font-size: 2rem;
 }
 
 .logo_a:hover, a:focus{
@@ -298,6 +299,15 @@ nav{
     border: none;
     padding: 0px 0px;
     text-decoration: none;
+}
+
+.plus{
+    color: var(--font-color-3);
+    background-color: none;
+    border: none;
+    padding: 0px 0px;
+    text-decoration: none;
+    font-size: 5rem;
 }
 
 #nav_logo{
@@ -320,8 +330,8 @@ main{
     background-color: var(--transparent);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 600px auto;
-    gap: 100px;
+    grid-template-rows: 200px auto;
+    gap: 20px;
 
 }
 
@@ -336,14 +346,16 @@ main{
 }
 
 /*section*/
-#top-section p{
+
+
+/* #top-section p{
     font-size: 0.7rem;
     color: var(--font-color-2);
     margin-top: 0;
 
-}
+} */
 
-#first-section, #second-section, #third-section{
+/* #first-section, #second-section, #third-section{
     background-color: var(--main-color);
     color: var(--font-color-2);
     padding-left: 20px;
@@ -353,9 +365,9 @@ main{
     
     position: relative;
     left: -60px;
-}
+} */
 
-#first-section article, #second-section article, #third-section article{
+/* #first-section article, #second-section article, #third-section article{
     position: relative;
     top: -60px;
     background-color: var(--second-color);
@@ -366,10 +378,10 @@ main{
 
 #first-section p, #second-section p, #third-section p{
     font-size: 0.8rem;
-}
+} */
 
 
-#second-section figure{
+/* #second-section figure{
     position: relative;
     right: -50px;
 }
@@ -377,17 +389,16 @@ main{
 .food #first-section, .team #first-section{
     margin-top: 50px;
     z-index: 1;
-}
+} */
 
 #forth-section{
-    
     background-color: var(--second-color);
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     font-size: 0.8rem;
     background-color: var(--second-color);
-
+    border-radius: 40px;
 }
 
 #prize-box{
@@ -395,21 +406,30 @@ main{
     background-color: var(--main-color);
     color: var(--font-color-2);
     padding: 20px;
-    
+    border-radius: 40px;
 }
 
-.reservation #forth-section{
+/* buttons */
+.detail{
+    border-radius: 100px;
+}
+.detail{
+    border-radius: 100px;
+    background-color: var(--font-color-2);
+}
+
+/* .reservation #forth-section{
     max-width: 90%;
     margin: auto;
    
-}
+} */
 
 #map{
     width: 300px;
     height: 240px;
 }
 
-#fifth-section{
+/* #fifth-section{
     background-color: var(--font-color-3);
     text-align: center;
     padding: 40px;
@@ -421,7 +441,7 @@ main{
 .reservation #fifth-section{
     margin-left: 0;
     margin-right: 0;
-}
+} */
 
 
 #table-section{
@@ -486,10 +506,10 @@ color: var(--font-color-2);
     float: right;
 }
 
-blockquote, pre{
+/* blockquote, pre{
     background-color: var(--font-color-3);
     padding: 20px;
-}
+} */
 cite{
     font-family: 'HanyiSentyZhao';
     
@@ -646,12 +666,12 @@ img {
     }
 
     #nav_ul{
-        /* display: flex;
-        flex-direction: row; */
+        /* display: flex; */
+        /* flex-direction: row; */
 
-        justify-content: end;
+        justify-content: space-between;
         list-style-type: none;
-        padding-left: 10px;
+        /* padding-left: 10px; */
         width: 100%;
         margin-top: 0;
     }
@@ -852,3 +872,15 @@ img {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
