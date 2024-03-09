@@ -433,6 +433,7 @@ main{
 }
 
 #prize-box{
+    height: 200px;
     font-size: 0.8rem;
     background-color: var(--main-color);
     color: var(--font-color-2);
@@ -722,8 +723,8 @@ img {
     
     #forth-section{
         font-size: 0.8rem;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 50px repeat(6, 50px);
+        grid-template-columns: 1fr;
+        grid-template-rows: 100px 100px 100px;
         padding-bottom: 140px;
     }
 
@@ -744,9 +745,9 @@ img {
 
     #prize-box{
         position: relative;
-        top: -180px;
+        bottom: -180px;
         margin-left: 90px;
-        margin-right: 90px;
+        /* margin-right: 90px; */
         
     }
 
