@@ -33,6 +33,12 @@
 }
 
 
+  
+  @keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+  }
 
 html {
     font-size: 1.1rem;
@@ -90,7 +96,20 @@ h4, h5, h6{
     
 }
 
-
+.circular-chart {
+    display: block;
+    margin: 10px auto;
+    max-width: 80%;
+    max-height: 250px;
+  }
+  
+  .circle {
+    stroke: var(--main-color);
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+  }
 
 /*anchor tag*/
 a, input{
