@@ -6,6 +6,9 @@
         <meta charset="utf-8">
         <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -19,7 +22,7 @@
                 <nav>
                     <div id="nav_container">
                         <ul id="nav_ul">
-                            <li id="nav_item1"><a class="reverse_a">Welcome James</a></li>
+                            <li id="nav_item1"><h2 class="reverse_a">Welcome James</h2></li>
                             <li id="nav_item8"><p><a class="logo_a" target="_blank"><i class="fa-solid fa-circle-user top_icon logo_a"></i></a></p></li>
                         </ul>
                     </div>                    
@@ -27,7 +30,7 @@
             </header>
             <main>
                 <!-- section 1: Quote -->
-                <section id="forth-section" class="tag">
+                <section class="tag">
                     <h2><span class="title_underline">Today's Quote</span></h2>
                     <div><hr/></div><br/>
                     <div class="quote">
@@ -43,7 +46,7 @@
                     <article>
                         X amount of days left befroe your pie is baked!
                     </article>   
-                    <article>
+                    <article class="percentage">
                         <svg viewBox="0 0 36 36" class="circular-chart">
                             <!-- get the percentage "80" from api" -->
                             <path class="circle"
@@ -70,7 +73,7 @@
                     <h2>Today's Goal</h2>
                 </section>
 
-                <section id="forth-section" class="tag">
+                <section id="forth-section" class="tag today_goal">
                     <article>
                         <svg viewBox="0 0 36 36" class="circular-chart">
                             <!-- get the percentage "80" from api" -->

@@ -54,7 +54,7 @@ function reqLogin(req, res, next) {
 app.get("/", (req, res) => {
   let doc;
   if (!req.session.loggedIn) {
-    doc = fs.readFileSync("index.html", "utf8");
+    doc = fs.readFileSync("home.html", "utf8");
   } else {
     doc = fs.readFileSync("dashboard.html", "utf8");
   }
