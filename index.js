@@ -4,6 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const bcrypt = require("bcrypt");
+const cors=require('cors');
 saltRounds = 12;
 
 const { printMySQLVersion } = include("database/db_utils");
@@ -14,6 +15,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+
+app.use(cors())
 
 const expireTime = 60 * 60 * 1000;
 const picURL = {
@@ -204,6 +207,11 @@ app.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
   return;
+});
+
+app.get("/test", (req, res) => {
+  console.log("a client is calling for test...")
+  res.json({ message: "Hello, Team17" });
 });
 
 app.get("*", (req, res) => {
