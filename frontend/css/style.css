@@ -60,6 +60,8 @@ box-sizing: inherit;
     --font-color-4:#969595;
     --deep-color: #ad7f1c;
 
+    --hr-color: #000000;
+
 
 }
 
@@ -113,7 +115,7 @@ h2, h3, h4, h5, h6, p{
 a, input{
     font-size: 0.8rem;
     color: var(--font-color-1);
-    border: solid 1px var(--main-color);
+    /* border: solid 1px var(--main-color); */
     padding: 10px 100px;
     text-decoration: none;
 }
@@ -303,14 +305,7 @@ main, section, article{
     text-decoration: none;
 }
 
-.plus{
-    color: var(--font-color-3);
-    background-color: none;
-    border: none;
-    padding: 0px 0px;
-    text-decoration: none;
-    font-size: 5rem;
-}
+
 
 #nav_logo{
     
@@ -325,6 +320,27 @@ main, section, article{
 .menu{
     color: var(--font-color-3);
     font-size: 1.5rem;
+}
+
+/*buttons*/
+.plus{
+    color: var(--font-color-3);
+    background-color: none;
+    border: none;
+    padding: 0px 0px;
+    text-decoration: none;
+    font-size: 5rem;
+}
+.add_button {
+    position: fixed;
+    bottom: 0px;
+    right:0px;
+    padding: 10px 20px;
+}
+.detail_button {
+    position: fixed;
+    right:0px;
+    padding: 10px 20px;
 }
 
 /*main*/
@@ -511,6 +527,45 @@ code{
     text-shadow: 2px 2px var(--deep-color);
 }
 
+.hr_section1 {
+    border: 0;
+    height: 1px;
+    background: var(--hr-color);
+}
+
+.hr_section2 {
+    border: 0;
+    height: 1px;
+    background: var(--hr-color);
+}
+
+.quote {
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .quote:before, .quote:after {
+    content: '"';
+    font-size: 3rem;
+    position: absolute;
+    color: var(--font-color-3);
+  }
+  .quote:before {
+    top: -10px;
+    left: 10px;
+  }
+  .quote:after {
+    bottom: -10px;
+    right: 10px;
+  }
+  .author {
+    display: block;
+    text-align: right;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+
 
 /*footer*/
 footer{
@@ -551,6 +606,7 @@ img {
 
 
 
+
 @media (min-width:525px){
 
     h1{
@@ -568,7 +624,7 @@ img {
     }
 
     .golden-list li:before{
-        content: "\2606";
+        /* content: "\2606"; */
         color: var(--deep-color);
         font-weight: bold;
         display: inline-block;
