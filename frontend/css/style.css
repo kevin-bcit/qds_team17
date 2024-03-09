@@ -51,6 +51,7 @@ box-sizing: inherit;
     --main-color-transparent:rgba(104, 104, 104, 0.25);    
     --second-color:rgb(231, 231, 231);    
     --second-color-transparent:rgba(255, 253, 253, 0.5);
+    --third-color:hsl(46, 83%, 61%);
     --transparent: rgba( 255, 255, 255, 0);
     
     /* palette */
@@ -122,22 +123,22 @@ a, input{
     text-decoration: none;
 }
 
-a:hover, a:focus, input:hover, input:focus{
+/* a:hover, a:focus, input:hover, input:focus{
     color:var(--font-color-2);
     background-color:var(--main-color);
     border: solid 1px var(--main-color);
     padding: 10px 100px;
     text-decoration: none;
     transition: all 0.4s ease;
-}
+} */
 
-a:active, input:active{
+/* a:active, input:active{
     color:var(--font-color-2);
     background-color:var(--font-color-3);
     border: solid 1px var(--font-color-3);
     padding: 10px 100px;
     text-decoration: none;
-}
+} */
 
 .fadein_img { 
     animation: fadeIn 3s; 
@@ -359,10 +360,24 @@ main{
     background-color: var(--transparent);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 130px auto;
     gap: 20px;
 
 }
+
+.comment-icon{
+    position: absolute;
+        bottom: -40px;
+        right: -40px;
+}
+
+.comment-icon:hover, .comment-icon:focus{
+    color:var(--font-color-2);
+    text-decoration: none;
+    transform: scale(1.3);
+    transition: 0.5s ease-in-out
+}
+
 
 .food, .sake, .team{
     grid-template-rows: auto auto;
@@ -376,19 +391,26 @@ main{
 
 /*section*/
 .community-section{
-    background-color: var(--second-color);
+    background-color: var(--third-color);
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     font-size: 0.8rem;
-    background-color: var(--second-color);
     border-radius: 40px;
+    position: relative;
 }
 
 .community-section figure{
     float: left;
     margin-right: 20px;
 }
+
+.community-section img{
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    background-color: var(--font-color-2);
+} 
 
 .community-section figcaption{
     margin-top: 15px;
@@ -648,6 +670,7 @@ img {
         padding: 10px;
         text-align: center;
     }
+
 
     header{
         padding-top: 0;
