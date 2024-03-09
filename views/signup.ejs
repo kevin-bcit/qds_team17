@@ -1,0 +1,17 @@
+<%- include("templates/header") %> 
+<h1>Create User</h1>
+<form action="/signingUp" method="POST">
+    <input type="text" name="username" placeholder="username">
+    <br>
+    <input type="password" name="password" placeholder="password">
+    <br>
+    <button type="submit">Sign up</button>
+</form>
+
+<% if (missingUsername) { %>
+    <p>Please provide a username</p>
+<% } %>  
+<% if (missingPassword) { %>
+    <p>Please provide a password</p>
+<% } %>  
+<%- include("templates/footer") %>
