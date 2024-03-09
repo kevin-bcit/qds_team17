@@ -42,7 +42,7 @@ box-sizing: inherit;
 /* variables */
 :root{     
     
-    --main-color:rgb(0, 0, 0);
+    --main-color:rgb(57, 57, 57);
     --main-color-transparent:rgba(104, 104, 104, 0.25);    
     --second-color:rgb(231, 231, 231);    
     --second-color-transparent:rgba(255, 253, 253, 0.5);
@@ -52,7 +52,7 @@ box-sizing: inherit;
     --font-color-1: #000000;
     --font-color-2:#e2e2e2;
     --font-color-3:#d4b572;
-    --font-color-4:#969595;
+    --font-color-4:#969695;
     --deep-color: #ad7f1c;
 
 
@@ -214,7 +214,7 @@ nav{
     flex-wrap: wrap;
     list-style-type:none;
     padding-left: 10px;
-    width: 40%;
+    /* width: 40%; */
 }
 
 #nav_ul li{
@@ -248,6 +248,8 @@ nav{
     border-bottom: solid 1px var(--font-color-4);
     padding-left: 10px;
     padding-right: 0px;
+    
+    
 }
 
 .reverse_a:active{
@@ -259,6 +261,18 @@ nav{
     padding-left: 10px;
     padding-right: 0px;
 }
+
+.nav_img:hover, .nav_img:focus, .nav_img:active{
+    transition: transform .2s;
+    transform: scale(1.4) translateY(-10px);
+}
+
+.nav_img_big:hover, .nav_img:focus, .nav_img:active{
+    transition: transform .2s;
+    transform: scale(1.2) translateY(-3px);
+}
+
+
 
 /*logo anchor tag*/
 .logo_a{
@@ -507,7 +521,7 @@ footer{
 
 
 .footer_div{
-    width: 40%;
+    /* width: 40%; */
     color: var(--font-color-2)
     
 }
@@ -622,7 +636,7 @@ img {
 
     /*nav*/
     #nav_container{
-        justify-content: end;
+        justify-content: space-evenly;
     }
 
     nav{
@@ -643,7 +657,7 @@ img {
     }
 
     #nav_ul li{
-        width: 10%;
+        /* width: 10%; */
     }
     
     #nav_ul p{
@@ -654,24 +668,15 @@ img {
         padding: 20px;
     }
 
-    #nav_item1, #nav_item2, #nav_item3, #nav_item7, #nav_item8{
+    #nav_item2, #nav_item3, #nav_item4{
+        padding-top: 10px;
         flex: 1 1 0;
     }
 
-    #nav_item4{
-        flex: 1.8 1 0;
+    #nav_item1{
+        flex: 1 1 0;
     }
 
-    #nav_item5{
-        flex: 2 1 0;
-    }
-    #nav_item6{
-        flex: 2.2 1 0;
-    }
-
-    #nav_logo{
-        display: none;
-    }
 
     .reverse_a, .reverse_a:hover, .reverse_a:focus, .reverse_a:active{
         border-bottom: none;
