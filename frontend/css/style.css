@@ -927,7 +927,8 @@ img {
 @media (min-width:525px){
 
     h1{
-        font-size: 8vw;
+        front-size: 6rem;
+        
         left: 30%;
         /* top: 100px; */
     }
