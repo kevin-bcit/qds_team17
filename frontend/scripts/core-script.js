@@ -1,5 +1,8 @@
+// getUserInfo()
+
+
 const apiUrl = 'http://localhost:3000';
-const endpoint = '/test'
+const endpoint = '/api/getUserInfo';
 
 fetch(apiUrl + endpoint)
     .then(response => response.json())
