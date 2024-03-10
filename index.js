@@ -365,23 +365,45 @@ app.post("/api/createProgress", urlencodedParser, function (req, res) {
     const creation_date = now.toISOString().slice(0, 10);
     const last_update_date = now.toISOString().slice(0, 19).replace("T", " ");
 
-    let query =
-      "INSERT INTO progress (user_id, challenge_id, target, completed_amount, creation_date, last_update_date) VALUES ?";
-    let recordValues = [
-      [
+    let query = `
+      INSERT INTO progress (
         user_id,
         challenge_id,
         target,
         completed_amount,
         creation_date,
-        last_update_date,
-      ],
-    ];
+        last_update_date
+      ) VALUES (
+        :user_id,
+        :challenge_id,
+        :target,
+        :completed_amount,
+        :creation_date,
+        :last_update_date
+      );
+      `;
+    let params = {
+      user_id: user_id,
+      challenge_id: challenge_id,
+      target: target,
+      completed_amount: completed_amount,
+      creation_date: creation_date,
+      last_update_date: last_update_date,
+    };
 
-    databasePool.query(query, recordValues);
-    res.send({
-      result: "Success",
-      msg: "Progress saved.",
+    databasePool.query(query, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send({
+          result: "Failed",
+          msg: "Failed to create progress.",
+        });
+      } else {
+        res.status(200).send({
+          result: "Success",
+          msg: "Progress created.",
+        });
+      }
     });
   } else {
     res.send({
