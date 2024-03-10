@@ -404,12 +404,68 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
     } else {
       res.status(400).send({
         result: "Failed",
-        msg: "Challenge not found.",
+        msg: "Progress not found.",
       });
     }
   });
 });
 
+// Comment API
+app.post("/api/setComment", urlencodedParser, function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  if (!req.session.loggedIn) {
+    const now = new Date();
+    //TODO: Change it to session userID
+    // const userID = req.session.user_id;
+    const userID = 3;
+    let query =
+      "INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES?";
+    let recordValues = [
+      [
+        req.body.progress_id,
+        req.body.contet,
+        userID,
+        now.toISOString().slice(0, 19).replace("T", " "),
+      ],
+    ];
+
+    databasePool.query(query, params);
+    res.send({
+      result: "Success",
+      msg: "Comment updated.",
+    });
+  } else {
+    res.send({
+      result: "Failed",
+      msg: "Not logged in.",
+    });
+  }
+});
+
+app.get("/api/getComment", urlencodedParser, function (req, res) {
+  let query = 
+  `SELECT c.*, u.username 
+  FROM comment c
+  JOIN user u ON c.commentor_id = u.user_id
+  WHERE c.progress_id = :progress_id;`;
+  let params = {
+    progress_id: req.query.progress_id,
+  };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found comments.",
+        data: result
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Comment not found.",
+      });
+    }
+  });
+});
 
 //#end region API
 app.listen(port, () => {

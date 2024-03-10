@@ -97,3 +97,18 @@ async function getRewardStatus(userId) {
     console.log(res);
     return res;
 }
+
+async function setComment(progress_id, content) {
+    let res = await postRequest('/api/setComment', {
+        progress_id: progress_id,
+        content: content
+    });
+    console.log(res);
+}
+ 
+
+async function getComment(progress_id) {
+    let res = await getRequest(`/api/getComment?progress_id=${progress_id}`);
+    console.log(res);
+    return res;
+}
