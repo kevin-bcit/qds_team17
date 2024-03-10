@@ -1,8 +1,6 @@
 const apiUrl = 'http://localhost:3000';
-const endpointLogin  = '/api/login';
 const endpointUserInfo = '/api/getUserInfo';
-const username = 'test_user7';
-const password = 'test1234';
+
 
 
 // fetch(apiUrl + endpointLogin, {
@@ -30,15 +28,15 @@ const password = 'test1234';
 
 ;(async ()=> {
 
-    headers = {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-    }
-    body = JSON.stringify({"username": username, "password": password})
+    // headers = {
+    //     'Accept': 'application/json, text/plain, */*',
+    //     'Content-Type': 'application/json'
+    // }
+    // body = JSON.stringify({"username": username, "password": password})
 
-    const login = await fetch(apiUrl + endpointLogin, {method: 'POST', headers: headers, body:body})
-    res = await login.json()
-    console.log(res)
+    // const login = await fetch(apiUrl + endpointLogin, {method: 'POST', headers: headers, body:body})
+    // res = await login.json()
+    // console.log(res)
 
     const response = await fetch(apiUrl + endpointUserInfo);
     const data = await response.json();
