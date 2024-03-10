@@ -53,6 +53,14 @@ async function getOtherUserInfoByName(username) {
   return res;
 }
 
+async function getAllChallengeInfo() {
+  let res = await getRequest(
+    `/api/getAllChallengeInfo`
+  );
+  console.log(res);
+  return res;
+}
+
 async function getChallengeInfo(challengeID) {
   let res = await getRequest(
     `/api/getChallengeInfo?challengeId=${challengeID}`
@@ -107,6 +115,12 @@ async function setComment(progress_id, content) {
 
 async function getComment(progress_id) {
   let res = await getRequest(`/api/getComment?progress_id=${progress_id}`);
+  console.log(res);
+  return res;
+}
+
+async function getTodayProgress() {
+  let res = await getRequest(`/api/getTodayProgress`);
   console.log(res);
   return res;
 }

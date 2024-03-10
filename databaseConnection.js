@@ -10,6 +10,6 @@ const dbConfig = {
   namedPlaceholders: true,
 };
 
-var database = mysql.createConnection(dbConfig);
+var database = mysql.createPool(dbConfig);
 
 module.exports = database;

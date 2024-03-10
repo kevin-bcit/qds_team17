@@ -298,20 +298,37 @@ app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
       res.status(200).send({
         result: "Success",
         msg: "Successfully got reward status.",
-        userId: result[0].userId,
-        numOfApple: result[0].numOfApple,
-        numOfApplePie: result[0].numOfApplePie,
+        data: result[0],
       });
     } else {
       res.status(400).send({
         result: "Failed",
         msg: "Failed to get reward status.",
+        data: undefined,
       });
     }
   });
 });
 
 // Challenge API
+app.get("/api/getAllChallengeInfo", urlencodedParser, function (req, res) {
+  let query = `SELECT * FROM challenge;`;
+  databasePool.query(query, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found challenge.",
+        data: result
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Challenge not found.",
+      });
+    }
+  });
+});
+
 app.get("/api/getChallengeInfo", urlencodedParser, function (req, res) {
   let query = `SELECT challenge_id, item, title, description, default_target FROM challenge WHERE challenge_id = :challengeId;
       `;
@@ -419,6 +436,33 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
       res.status(400).send({
         result: "Failed",
         msg: "Progress not found.",
+      });
+    }
+  });
+});
+
+app.get("/api/getTodayProgress", urlencodedParser, function (req, res) {
+  let query = `
+  SELECT p.*, c.title, c.item, u.unit
+  FROM progress AS p
+  JOIN challenge AS c USING (challenge_id)
+  JOIN unit AS u USING (unit_id)
+  WHERE creation_date >= ADDDATE(CURDATE(), INTERVAL -1 DAY)
+  AND user_id = :userId;
+  `;
+  let params = { userId: req.session.user_id };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found user's today progress.",
+        data: result,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "User's today progress not found.",
+        data: undefined,
       });
     }
   });

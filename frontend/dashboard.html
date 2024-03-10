@@ -15,6 +15,7 @@
         <script src="scripts/scroll-fade.js" defer="defer"></script>
         <script src="scripts/serverInterface.js" defer="defer"></script>
         <script src="scripts/core-script.js" defer="defer"></script>
+        <script src="scripts/dashboard.js" defer="defer"></script>
     </head>
     <body>
         <!-- <div id="background_img" class="fadein_img"></div> -->
@@ -23,7 +24,7 @@
                 <nav>
                     <div id="nav_container">
                         <ul id="nav_ul">
-                            <li id="nav_item1"><h2 class="reverse_a">Welcome James</h2></li>
+                            <li id="nav_item1"><h2 class="reverse_a">Welcome <span id="username"></span></h2></li>
                             <li id="nav_item8"><p><a class="logo_a" target="_blank"><i class="fa-solid fa-circle-user top_icon logo_a"></i></a></p></li>
                         </ul>
                     </div>                    
@@ -35,8 +36,8 @@
                     <h2><span class="title_underline">Today's Quote</span></h2>
                     <div><hr/></div><br/>
                     <div class="quote">
-                        When you help someone, you help everyone
-                        <span class="author">-user XYZ</span>
+                        <span id="quote"></span>
+                        <span class="author"></span>
                     </div>
                     <br/><div><hr/></div>
                 </section>
@@ -45,25 +46,25 @@
                 <section id="forth-section" class="fadeInAnime">
                     <h2><span class="title_underline">Apple Pie Goal</span></h2>
                     <article>
-                        X amount of days left befroe your pie is baked!
+                        <span id="daysLeft"></span> days left befroe your pie is baked!
                     </article>   
                     <article class="percentage">
                         <svg viewBox="0 0 36 36" class="circular-chart">
-                            <!-- get the percentage "80" from api" -->
+                            <!-- stroke-dasharray is the percentage of the pie" -->
                             <path class="circle"
-                              stroke-dasharray="80, 100"
+                              stroke-dasharray="0, 100"
                               d="M18 2.0845
                                 a 15.9155 15.9155 0 0 1 0 31.831
                                 a 15.9155 15.9155 0 0 1 0 -31.831"
                             />
-                            <text x="18" y="20.35" class="percentage">80%</text>
+                            <text x="18" y="20.35" class="percentage" id="applePiePercentage"></text>
                           </svg>
                     </article>
                     <aside id="prize-box">
                         <ul class="golden-list">
-                            <li class="list-item"><img src="./images/apples.png"><span class="text-content">24 apples picked</span></li>
+                            <li class="list-item"><img src="./images/apples.png"><span class="text-content" id="appleCount"></span></li>
                             <hr class="hr_section2"/>
-                            <li class="list-item"><img src="./images/pies.png"><span class="text-content">12 pies baked</span></li>
+                            <li class="list-item"><img src="./images/pies.png"><span class="text-content" id="applePieCount"></span></li>
                         </ul>
                     </aside>
                 </section>
@@ -71,21 +72,13 @@
                 
 
                 <!-- section 3: Today -->
+
                 <section id="second-section" class="tag">
                     <h2>Today's Goal</h2>
                 </section>
 
-                <section id="fifth-section" class="tag today_goal">
-                    <article class="water">
-                        <img src="./images/water_icon.png">
-                    </article>
-                    <article>
-                        <a href="details.html"><img src="./images/detail_button.png" class="detail_button"></a>
-                        <h2><span class="title_underline">Daily Water Intake</span></h2>
-                        <p>X amount of cups left!</p>
-                        <a><img src="./images/add_button.png" class="add_button"></a>
-                    </article>
-                </section>
+                <!-- placeholder to render today's goal -->
+                <div id="today_goals"></div>
                 
             </main>
             <nav>
