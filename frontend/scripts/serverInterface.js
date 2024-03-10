@@ -30,14 +30,6 @@ function getRequest(url) {
 // END: HTTP Request //
 
 // Server interface//
-async function login(username = "testuser") {
-  let res = await postRequest("/api/login", {
-    password: "testPass",
-    username: username,
-  });
-  console.log(res);
-}
-
 async function logout() {
   let res = await getRequest("/api/logout");
   console.log(res);
@@ -106,16 +98,15 @@ async function getRewardStatus(userId) {
 }
 
 async function setComment(progress_id, content) {
-    let res = await postRequest('/api/setComment', {
-        progress_id: progress_id,
-        content: content
-    });
-    console.log(res);
+  let res = await postRequest("/api/setComment", {
+    progress_id: progress_id,
+    content: content,
+  });
+  console.log(res);
 }
- 
 
 async function getComment(progress_id) {
-    let res = await getRequest(`/api/getComment?progress_id=${progress_id}`);
-    console.log(res);
-    return res;
+  let res = await getRequest(`/api/getComment?progress_id=${progress_id}`);
+  console.log(res);
+  return res;
 }
