@@ -144,7 +144,7 @@ app.post("/api/login", urlencodedParser, function (req, res) {
   databasePool.query(query, params, (err, queryResult) => {
     if (queryResult != null && queryResult.length > 0) {
       bcrypt.compare(
-        req.body.password,
+        password,
         queryResult[0].password,
         (err, compareResult) => {
           if (compareResult) {
@@ -362,7 +362,7 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
         result: "Success",
         msg: "Sucessfully found progress.",
         challengeId: result[0].challenge_id,
-        percentageCompleteByDay: result[0].completed_amount / result[0].target
+        percentageCompleteByDay: result[0].completed_amount / result[0].target,
       });
     } else {
       res.status(400).send({
@@ -393,7 +393,6 @@ app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
     userId: req.query.userId,
   };
   databasePool.query(query, params, (err, result) => {
-    console.log(result);
     if (result != null && result.length > 0) {
       res.status(200).send({
         result: "Success",
