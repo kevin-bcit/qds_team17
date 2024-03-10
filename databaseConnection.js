@@ -1,4 +1,4 @@
-const mysql = require("mysql2")
+const mysql = require("mysql2");
 
 const dbConfig = {
   host: process.env.MYSQL_HOST,
