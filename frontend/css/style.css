@@ -927,9 +927,7 @@ img {
 
 /* signup page */
 .signup-container {
-    /* height: 200px; */
     position: relative;
-    /* border: 3px solid green; */
   }
 
   .button-field {
@@ -967,7 +965,7 @@ input[type="date"] {
     border: 1px solid #ccc;
     border-radius: 30px;
     background-color: var(--second-color-transparent);
-    box-sizing: border-box; /* Added to include padding in width */
+    box-sizing: border-box;
 }
 
 input::placeholder {
@@ -978,13 +976,12 @@ input::placeholder {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    /* color: white; */
     cursor: pointer;
     font-size: 1.1em;
 }
 
 .signup-button:hover {
-    background-color: #c0392b; /* Button hover state color */
+    background-color: #c0392b;
 }
 
 
