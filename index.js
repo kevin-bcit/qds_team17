@@ -168,7 +168,7 @@ app.get("/api/getUserInfo", urlencodedParser, function (req, res) {
         location,
         quote
       FROM user
-      WHERE username = :user OR user_id = :userId;`;
+      WHERE username = :username OR user_id = :userId;`;
     let params = {
       username: req.query.username,
       userId: parseInt(req.query.uid ? req.query.uid : -1),
