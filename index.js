@@ -356,7 +356,7 @@ app.get("/api/getChallengeInfo", urlencodedParser, function (req, res) {
 // Prgress API
 app.post("/api/createProgress", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  if (!req.session.loggedIn) {
+  if (req.session.loggedIn) {
     const user_id = req.body.userId;
     const challenge_id = req.body.challenge_id;
     const target = req.body.target;
@@ -504,7 +504,7 @@ app.get(
 // Comment API
 app.post("/api/setComment", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  if (!req.session.loggedIn) {
+  if (req.session.loggedIn) {
     const now = new Date();
     const userID = req.session.user_id;
     let query =
@@ -512,13 +512,13 @@ app.post("/api/setComment", urlencodedParser, function (req, res) {
     let recordValues = [
       [
         req.body.progress_id,
-        req.body.contet,
+        req.body.content,
         userID,
         now.toISOString().slice(0, 19).replace("T", " "),
       ],
     ];
 
-    databasePool.query(query, params);
+    databasePool.query(query, recordValues);
     res.send({
       result: "Success",
       msg: "Comment updated.",

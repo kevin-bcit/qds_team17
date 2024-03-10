@@ -18,18 +18,18 @@ popupClose.click(e=>{
     }
 })
 
-addCmtBtn.click(e=>{
-    e.preventDefault();
+// addCmtBtn.click(e=>{
+//     e.preventDefault();
 
-    popup.css("display", "block");
-    popup.addClass("fadeInAnime");
+//     popup.css("display", "block");
+//     popup.addClass("fadeInAnime");
     
-    setTimeout(()=>{
-        popup.css("opacity",1);
-        popup.removeClass(".fadeInAnime");
-    }, 500)
+//     setTimeout(()=>{
+//         popup.css("opacity",1);
+//         popup.removeClass(".fadeInAnime");
+//     }, 500)
     
-})
+// })
 
 blackCmtBtn.click(e=>{
     e.preventDefault();
