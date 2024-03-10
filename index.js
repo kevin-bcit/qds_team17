@@ -529,21 +529,30 @@ app.post("/api/setComment", urlencodedParser, function (req, res) {
   if (req.session.loggedIn) {
     const now = new Date();
     const userID = req.session.user_id;
-    let query =
-      "INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES?";
-    let recordValues = [
-      [
-        req.body.progress_id,
-        req.body.content,
-        userID,
-        now.toISOString().slice(0, 19).replace("T", " "),
-      ],
-    ];
+    const query = `
+    INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES (:progress_id, :content, :commentor_id, :creation_date);
+    `;
+    const params = {
+      progress_id: req.body.progress_id,
+      content: req.body.content,
+      commentor_id: userID,
+      creation_date: now.toISOString().slice(0, 19).replace("T", " "),
+    };
 
-    databasePool.query(query, recordValues);
-    res.send({
-      result: "Success",
-      msg: "Comment updated.",
+    databasePool.query(query, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send({
+          result: "Failed",
+          msg: "Failed to create comment.",
+        });
+      } else {
+        res.status(200).send({
+          result: "Success",
+          msg: "Comment created.",
+          data: result,
+        });
+      }
     });
   } else {
     res.send({
