@@ -52,6 +52,8 @@ box-sizing: inherit;
     --second-color:rgb(231, 231, 231);    
     --second-color-transparent:rgba(255, 253, 253, 0.5);
     --third-color:hsl(46, 83%, 61%);
+    --forth-color:#DE7041;
+    --fifth-color: rgb(202, 202, 202);
     --transparent: rgba( 255, 255, 255, 0);
     
     /* palette */
@@ -365,6 +367,15 @@ main{
 
 }
 
+#comment-main{
+    background-color: var(--transparent);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px auto;
+    gap: 20px;
+
+}
+
 .comment-icon{
     position: absolute;
         bottom: -40px;
@@ -375,7 +386,14 @@ main{
     color:var(--font-color-2);
     text-decoration: none;
     transform: scale(1.3);
-    transition: 0.5s ease-in-out
+    transition: 0.5s ease-in-out;
+}
+
+.comment-add-icon:hover, .comment-add-icon:focus{
+    color:var(--font-color-2);
+    text-decoration: none;
+    transform: scale(2);
+    transition: 0.5s ease-in-out;
 }
 
 
@@ -400,12 +418,32 @@ main{
     position: relative;
 }
 
-.community-section figure{
+.comment-section{
+    background-color: var(--forth-color);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-size: 0.8rem;
+    border-radius: 40px;
+    position: relative;
+}
+
+.comment-add-section{
+    background-color: var(--fifth-color);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-size: 0.8rem;
+    border-radius: 40px;
+    position: relative;
+}
+
+.community-section figure, .comment-section figure, .comment-add-section figure{
     float: left;
     margin-right: 20px;
 }
 
-.community-section article img{
+.community-section article img, .comment-section article img, .comment-add-section article figure img{
     object-fit: cover;
     width: 100px;
     height: 100px;
@@ -428,6 +466,17 @@ main{
       "YTLC" 500;
 }
 
+.comment-title{
+    font-size: 1rem;
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100,
+      "YTLC" 500;
+}
+
 .community-time{
     float: right;
     font-size: 0.8rem;
@@ -436,10 +485,14 @@ main{
     
 }
 
-.community-section figure img{
+.community-section figure img, .comment-section figure img, .comment-add-section figure img{
     height: 80px;
     border-radius: 15%;
     border: solid 2px var(--main-color);
+}
+
+#comment-add-btn{
+    float: right
 }
 
 
