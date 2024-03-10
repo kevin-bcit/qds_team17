@@ -60,7 +60,6 @@ function reqLogin(req, res, next) {
 }
 
 //#region PUBLIC PAGES
-//todo: change all route routes
 app.get("/", function (req, res) {
   let doc;
   if (!req.session.loggedIn) {
@@ -135,10 +134,7 @@ app.post("/api/signup", urlencodedParser, function (req, res) {
         msg: "Failed to create account.",
       });
     } else {
-      res.status(200).send({
-        result: "Success",
-        msg: "Successfully created account.",
-      });
+      res.redirect('/login');
     }
   });
 });
