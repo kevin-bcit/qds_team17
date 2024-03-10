@@ -110,3 +110,9 @@ async function getComment(progress_id) {
   console.log(res);
   return res;
 }
+
+async function getTodayProgress() {
+  let res = await getRequest(`/api/getTodayProgress`);
+  console.log(res);
+  return res;
+}
