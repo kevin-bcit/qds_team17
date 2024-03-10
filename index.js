@@ -21,14 +21,29 @@ app.use(express.static(__dirname + "/frontend"));
 app.use(cors());
 
 // Session setup
-// todo: Change this one (or not...)
-const node_session_secret = process.env.NODE_SESSION_SECRET;
+const mySqlStore = require("express-mysql-session")(session);
+const options = {
+  connectionLimit: 10,
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  database: process.env.MYSQL_DATABASE,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  createDatabaseTable: true,
+};
+const sessionStore = new mySqlStore(options);
 app.use(
   session({
+    name: "QDSSession",
     secret: process.env.NODE_SESSION_SECRET,
-    name: "SWSession",
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      secure: false,
+      sameSite: true,
+    },
   })
 );
 
@@ -67,6 +82,7 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/dashboard", reqLogin, function (req, res) {
+  console.log(req.session.username);
   let doc = fs.readFileSync("./frontend/dashboard.html", "utf8");
   res.send(doc);
 });
@@ -409,7 +425,6 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
     }
   });
 });
-
 
 app.get("/api/getQuote", urlencodedParser, function (req, res) {
   let query = `
