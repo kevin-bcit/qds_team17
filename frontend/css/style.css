@@ -473,6 +473,7 @@ main{
     font-size: 0.8rem;
     border-radius: 40px;
     position: relative;
+    margin-bottom: 20px;
 }
 
 .comment-section{
@@ -483,6 +484,7 @@ main{
     font-size: 0.8rem;
     border-radius: 40px;
     position: relative;
+    margin-bottom: 10px;
 }
 
 .comment-add-section{
@@ -493,6 +495,7 @@ main{
     font-size: 0.8rem;
     border-radius: 40px;
     position: relative;
+    margin-bottom: 20px;
 }
 
 .community-section figure, .comment-section figure, .comment-add-section figure{
@@ -808,7 +811,7 @@ code{
     animation: btn-yellow 2000ms infinite;
   }
 
-  #close-pop:hover,
+#close-pop:hover,
 #close-pop:focus,
 #close-pop:active {
   background-color: #f9e19b;
@@ -868,13 +871,13 @@ code{
     max-width:300px;
 }
 
-.input-label-group{      
+#comment_input_group{      
     margin-bottom:5px;
     display: flex;
     flex-direction: column;
 }
 
-.input-label-group input{      
+#comment_input_group input{      
     border-radius: 5px;    
     padding:2px 5px;
     font-weight: bold;
@@ -883,13 +886,13 @@ code{
 
     transition:all .2s ease;
 }
-.input-label-group input:focus, .input-label-group textarea:focus{      
+#comment_input_group input:focus, #comment_input_group textarea:focus{      
     background-color: var(--fifth-color);
     color:var(--light-color);
     outline:none; 
 
 }
-.input-label-group label{
+#comment_input_group label{
     background-color: var(--second-color);
     color: var(--main-color);
     font-weight: bold;        
@@ -899,9 +902,10 @@ code{
     margin:3px 5px;    
 }
 
-/* color swatch wont fill space by default */
-input[type='color']{
+
+#username, #progress_id{
     width:100%;
+    max-height: 30px;
 }
 
 textarea{

@@ -1,4 +1,5 @@
 const addCmtBtn = $("#comment-add-btn");
+const blackCmtBtn = $(".comment-icon")
 const popup = $("#pop");
 const popupContent = $("#pop-content");
 const popupClose = $(".close-pop");
@@ -18,6 +19,19 @@ popupClose.click(e=>{
 })
 
 addCmtBtn.click(e=>{
+    e.preventDefault();
+
+    popup.css("display", "block");
+    popup.addClass("fadeInAnime");
+    
+    setTimeout(()=>{
+        popup.css("opacity",1);
+        popup.removeClass(".fadeInAnime");
+    }, 500)
+    
+})
+
+blackCmtBtn.click(e=>{
     e.preventDefault();
 
     popup.css("display", "block");
