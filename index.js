@@ -10,12 +10,10 @@ const bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.json({
   extended: false,
 });
-const saltRounds = 12;
+const saltRounds = 10;
 
 const databasePool = require("./databaseConnection");
-// const { printMySQLVersion } = include("database/db_utils");
-// const { createUser, getUser } = include("database/users");
-// printMySQLVersion();
+const e = require("express");
 
 const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + "/frontend"));
@@ -132,30 +130,48 @@ app.post("/api/signup", urlencodedParser, function (req, res) {
 app.post("/api/login", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
   const password = req.body.password;
-  const user = req.body.username ? req.body.username : req.body.email;
+  const username = req.body.username;
 
-  //TODO: Make authentication system
-  authenticate(user, password, (result) => {
-    if (result.status == 200) {
-      req.session.loggedIn = true;
-      req.session.user_id = result.user.user_id;
-      req.session.username = result.user.username;
-      req.session.first_name = result.user.first_name;
-      req.session.last_name = result.user.last_name;
-      req.session.birth_date = result.user.birth_date;
-      req.session.gender = result.user.gender;
-      req.session.location = result.user.location;
-      req.session.quote = result.user.quote;
+  let query = `
+  SELECT user_id, username, password, first_name, last_name, birth_date, gender, location, quote
+  FROM user
+  WHERE username = :username;
+  `;
+  let params = {
+    username: username,
+  };
 
-      req.session.save(function (err) {
-        //console.log(err);
-      });
-      res.status(200).send({
-        result: "Successfully logged in.",
-      });
+  databasePool.query(query, params, (err, queryResult) => {
+    if (queryResult != null && queryResult.length > 0) {
+      bcrypt.compare(
+        req.body.password,
+        queryResult[0].password,
+        (err, compareResult) => {
+          if (compareResult) {
+            req.session.loggedIn = true;
+            req.session.user_id = queryResult[0].user_id;
+            req.session.username = queryResult[0].username;
+            req.session.first_name = queryResult[0].first_name;
+            req.session.last_name = queryResult[0].last_name;
+            req.session.birth_date = queryResult[0].birth_date;
+            req.session.gender = queryResult[0].gender;
+            req.session.location = queryResult[0].location;
+            req.session.quote = queryResult[0].quote;
+            res.status(200).send({
+              result: "Successfully logged in.",
+            });
+          } else {
+            res.status(400).send({
+              result: "Failed",
+              msg: "Password is incorrect.",
+            });
+          }
+        }
+      );
     } else {
       res.status(400).send({
-        result: "Failed to log in.",
+        result: "Failed",
+        msg: "Failed to fetch user info.",
       });
     }
   });
