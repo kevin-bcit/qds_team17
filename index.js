@@ -78,6 +78,16 @@ app.get("/community", function (req, res) {
   res.send(doc);
 });
 
+app.get("/comment", function (req, res) {
+  let doc = fs.readFileSync("./frontend/comment.html", "utf8");
+  res.send(doc);
+});
+
+app.get("/details", function (req, res) {
+  let doc = fs.readFileSync("./frontend/details.html", "utf8");
+  res.send(doc);
+});
+
 //#end region route
 
 //#region API
