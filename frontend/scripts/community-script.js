@@ -34,15 +34,12 @@ const support = ["Almost halfway in collecting today’s apple. Wish me luck eve
         console.log(challenge)
         console.log(pdata)
 
-        // const ures = await fetch(`${apiUrl}${endpointUser}?uid=${pdata.user_id}`)
-        // const udata = await ures.json()
-        // console.log(udata)
 
 
         sectionBlock = `<section class="community-section" class="tag">
         <article>
             <figure><img src="./images/cat${picNum}.jpg"></img><figcaption>lifetime pies</figcaption></figure>
-            <span class="community-title">${"NAME?"}</span><span class="community-time">2 days 5 hours</span>
+            <span class="community-title">${pdata.username}</span><span class="community-time">2 days 5 hours</span>
             <p>${support[Math.floor(Math.random() * support.length)]}</p>
             
         </article>

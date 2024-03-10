@@ -1014,7 +1014,15 @@ input::placeholder {
     background-color: #c0392b;
 }
 
+.sticky {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
 
+  .sticky + main {
+    padding-bottom: 60px;
+  }
 
 
 @media (min-width:525px){
