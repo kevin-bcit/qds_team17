@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.json({
   extended: false,
 });
+const saltRounds = 12;
 
 const databasePool = require("./databaseConnection");
 // const { printMySQLVersion } = include("database/db_utils");
@@ -82,6 +83,41 @@ app.get("/community", function (req, res) {
 //#region API
 
 //todo: create/ delete/ edit account
+
+app.post("/api/signup", urlencodedParser, function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  const param = {
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, saltRounds),
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    birthDate: req.body.birthDate,
+    gender: req.body.gender,
+    location: req.body.location,
+    quote: req.body.quote,
+  };
+
+  let query = `
+  INSERT INTO user
+  (username, password, first_name, last_name, birth_date, gender, location, quote)
+  VALUES
+  (:username, :password, :firstName, :lastName, :birthDate, :gender, :location, :quote);
+  `;
+
+  databasePool.query(query, param, (err, result) => {
+    if (err) {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Failed to create account.",
+      });
+    } else {
+      res.status(200).send({
+        result: "Success",
+        msg: "Successfully created account.",
+      });
+    }
+  });
+});
 
 app.post("/api/login", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
@@ -168,7 +204,8 @@ app.get("/api/getUserInfo", urlencodedParser, function (req, res) {
         location,
         quote
       FROM user
-      WHERE username = :username OR user_id = :userId;`;
+      WHERE username = :username OR user_id = :userId;
+      `;
     let params = {
       username: req.query.username,
       userId: parseInt(req.query.uid ? req.query.uid : -1),
