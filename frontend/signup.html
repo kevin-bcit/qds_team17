@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Team 17</title>
 
-        <meta charset="utf-8">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-        <script src="scripts/scroll-fade.js" defer="defer"></script>
-        <script src="scripts/script.js" defer="defer"></script>
-    </head>
-    <body>
-        <h1>Sign up</h1>
-        <form action="/api/signup" method="post">
+<head>
+    <title>Team 17</title>
+
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="scripts/scroll-fade.js" defer="defer"></script>
+    <script src="scripts/script.js" defer="defer"></script>
+</head>
+
+<body>
+    <div id="background_img" class="fadein_img"></div>
+
+    <div class="signup-header">
+        <h2 class="signup_font">Sign Up</h2>
+    </div>
+
+    <!-- <form action="/api/signup" method="post">
             <input type="text" name="username" placeholder="username" required>
             <input type="password" name="password" placeholder="password" required>
             <input type="text" name="firstName" placeholder="firstName" required>
@@ -27,7 +36,38 @@
             <input type="text" name="location" placeholder="location" required>
             <input type="text" name="quote" placeholder="quote" required>
             <button type="submit">Sign Up</button>
+        </form> -->
+
+    <div class="signup-container">
+        <form action="/api/signup" method="post" class="signup-form">
+            <div class="form-field">
+                <input type="text" name="username" placeholder="Username..." required>
+            </div>
+            <div class="form-field">
+                <input type="password" name="password" placeholder="Password..." required>
+            </div>
+            <div class="form-field" style="width: 48%; box-sizing: border-box; float: left;">
+                <input type="text" name="firstName" placeholder="Firstname..." required>
+            </div>
+            <div class="form-field" style="width: 48%; box-sizing: border-box; float: right;">
+                <input type="text" name="lastName" placeholder="Lastname..." required>
+            </div>
+            <div class="form-field">
+                <input type="text" name="gender" placeholder="Gender" required>
+            </div>
+            <div class="form-field">
+                <input type="text" name="location" placeholder="Location" required>
+            </div>
+            <div class="form-field">
+                <input type="text" name="quote" placeholder="Your quote..." required>
+            </div>
+            <div class="form-field button-field">
+                <input type="image" src="./images/submit.png" alt="Submit" class="signup-button">
+            </div>
         </form>
-    </body>
-    
+    </div>
+
+
+
+
 </html>
