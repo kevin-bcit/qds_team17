@@ -312,6 +312,24 @@ app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
 });
 
 // Challenge API
+app.get("/api/getAllChallengeInfo", urlencodedParser, function (req, res) {
+  let query = `SELECT * FROM challenge;`;
+  databasePool.query(query, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found challenge.",
+        data: result
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Challenge not found.",
+      });
+    }
+  });
+});
+
 app.get("/api/getChallengeInfo", urlencodedParser, function (req, res) {
   let query = `SELECT challenge_id, item, title, description, default_target FROM challenge WHERE challenge_id = :challengeId;
       `;

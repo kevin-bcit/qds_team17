@@ -53,6 +53,14 @@ async function getOtherUserInfoByName(username) {
   return res;
 }
 
+async function getAllChallengeInfo() {
+  let res = await getRequest(
+    `/api/getAllChallengeInfo`
+  );
+  console.log(res);
+  return res;
+}
+
 async function getChallengeInfo(challengeID) {
   let res = await getRequest(
     `/api/getChallengeInfo?challengeId=${challengeID}`
