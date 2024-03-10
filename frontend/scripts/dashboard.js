@@ -40,19 +40,36 @@ async function renderTodayProgress() {
       todayGoalsDiv += `
       <div id="progress_${progress.progress_id}">
         <section id="fifth-section" class="tag today_goal" >
+
           <article class="event_icon">
             <img src=${icons[progress.item.replace(" ", "")]}>
           </article>
+
+
           <article>
-              <a href="details.html"><img src="./images/detail_button.png" class="detail_button"></a>
-              <h2><span class="title_underline">${progress.title}</span></h2>
-              <p><span id="left_${progress.progress_id}">${
-        progress.target - progress.completed_amount
-      }</span> ${progress.unit}(s) left!</p>
-            <a class="incrementButton" value=${progress.completed_amount} id=${
-        progress.progress_id
-      }><img src="./images/add_button.png" class="add_button"></a>
+            <a href="details.html">
+              <img src="./images/detail_button.png" class="detail_button">
+            </a>
+
+            <h2>
+              <span class="title_underline">
+                ${progress.title}
+              </span>
+            </h2>
+
+            <p>
+              <span id="left_${progress.progress_id}">
+                ${progress.target - progress.completed_amount}
+              </span> 
+              ${progress.unit}(s) left!
+            </p>
+
+            <a class="incrementButton" value=${progress.completed_amount} id=${progress.progress_id}>
+              <img src="./images/add_button.png" class="add_button">
+            </a>
           </article>
+
+
         </section>
       </div>
       `;
