@@ -144,7 +144,7 @@ app.post("/api/login", urlencodedParser, function (req, res) {
   databasePool.query(query, params, (err, queryResult) => {
     if (queryResult != null && queryResult.length > 0) {
       bcrypt.compare(
-        req.body.password,
+        password,
         queryResult[0].password,
         (err, compareResult) => {
           if (compareResult) {
@@ -258,6 +258,238 @@ app.get("/api/getUserInfo", urlencodedParser, function (req, res) {
       }
     });
   }
+});
+
+app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
+  let query = `
+  SELECT
+    user_id AS userId,
+    (
+      SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
+      SUM(completed_amount / target = 1)
+    ) % 10 AS numOfApple,
+      FLOOR((
+      SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
+      SUM(completed_amount / target = 1)
+    ) / 10) AS numOfApplePie
+  FROM progress
+  WHERE user_id = :userId
+  GROUP BY user_id;
+  `;
+  let params = {
+    userId: req.query.userId,
+  };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Successfully got reward status.",
+        userId: result[0].userId,
+        numOfApple: result[0].numOfApple,
+        numOfApplePie: result[0].numOfApplePie,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Failed to get reward status.",
+      });
+    }
+  });
+});
+
+// Challenge API
+app.get("/api/getChallengeInfo", urlencodedParser, function (req, res) {
+  let query = `SELECT challenge_id, item, title, description, default_target FROM challenge WHERE challenge_id = :challengeId;
+      `;
+  let params = {
+    challengeId: req.query.challengeId,
+  };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found challenge.",
+        challengeId: result[0].challenge_id,
+        item: result[0].item,
+        title: result[0].title,
+        description: result[0].description,
+        default_target: result[0].default_target,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Challenge not found.",
+      });
+    }
+  });
+});
+
+// Prgress API
+app.post("/api/createProgress", urlencodedParser, function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  if (!req.session.loggedIn) {
+    const user_id = req.body.userId;
+    const challenge_id = req.body.challenge_id;
+    const target = req.body.target;
+    const completed_amount = 0;
+    const now = new Date();
+    const creation_date = now.toISOString().slice(0, 10);
+    const last_update_date = now.toISOString().slice(0, 19).replace("T", " ");
+
+    let query =
+      "INSERT INTO progress (user_id, challenge_id, target, completed_amount, creation_date, last_update_date) VALUES ?";
+    let recordValues = [
+      [
+        user_id,
+        challenge_id,
+        target,
+        completed_amount,
+        creation_date,
+        last_update_date,
+      ],
+    ];
+
+    databasePool.query(query, recordValues);
+    res.send({
+      result: "Success",
+      msg: "Progress saved.",
+    });
+  } else {
+    res.send({
+      result: "Failed",
+      msg: "Not logged in.",
+    });
+  }
+});
+
+app.post("/api/updateProgress", urlencodedParser, function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  if (!req.session.loggedIn) {
+    const now = new Date();
+
+    let query =
+      "UPDATE progress SET last_update_date = :last_update_date, completed_amount = :completed_amount WHERE progress_id = :progress_id";
+    let params = {
+      last_update_date: now.toISOString().slice(0, 19).replace("T", " "),
+      completed_amount: req.body.completed_amount,
+      progress_id: req.body.progress_id,
+    };
+
+    databasePool.query(query, params);
+    res.send({
+      result: "Success",
+      msg: "Progress updated.",
+    });
+  } else {
+    res.send({
+      result: "Failed",
+      msg: "Not logged in.",
+    });
+  }
+});
+
+app.get("/api/getProgress", urlencodedParser, function (req, res) {
+  let query = `SELECT challenge_id, completed_amount, target FROM progress WHERE progress_id = :progress_id;`;
+  let params = {
+    progress_id: req.query.progress_id,
+  };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found progress.",
+        challengeId: result[0].challenge_id,
+        percentageCompleteByDay: result[0].completed_amount / result[0].target,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Progress not found.",
+      });
+    }
+  });
+});
+
+// Comment API
+app.post("/api/setComment", urlencodedParser, function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  if (!req.session.loggedIn) {
+    const now = new Date();
+    //TODO: Change it to session userID
+    // const userID = req.session.user_id;
+    const userID = 3;
+    let query =
+      "INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES?";
+    let recordValues = [
+      [
+        req.body.progress_id,
+        req.body.contet,
+        userID,
+        now.toISOString().slice(0, 19).replace("T", " "),
+      ],
+    ];
+
+    databasePool.query(query, params);
+    res.send({
+      result: "Success",
+      msg: "Comment updated.",
+    });
+  } else {
+    res.send({
+      result: "Failed",
+      msg: "Not logged in.",
+    });
+  }
+});
+
+app.get("/api/getComment", urlencodedParser, function (req, res) {
+  let query = 
+  `SELECT c.*, u.username 
+  FROM comment c
+  JOIN user u ON c.commentor_id = u.user_id
+  WHERE c.progress_id = :progress_id;`;
+  let params = {
+    progress_id: req.query.progress_id,
+  };
+  databasePool.query(query, params, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully found comments.",
+        data: result
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Comment not found.",
+      });
+    }
+  });
+});
+
+app.get("/api/getQuote", urlencodedParser, function (req, res) {
+  let query = `
+  SELECT user_id, username, quote
+  FROM user
+  ORDER BY RAND()
+  LIMIT 1;
+  `;
+  databasePool.query(query, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully got a quote.",
+        userId: result[0].user_id,
+        username: result[0].username,
+        quote: result[0].quote,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Quote not found.",
+      });
+    }
+  });
 });
 
 //#end region API
