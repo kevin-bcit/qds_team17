@@ -155,11 +155,13 @@ app.post("/api/login", urlencodedParser, function (req, res) {
 
   databasePool.query(query, params, (err, queryResult) => {
     if (queryResult != null && queryResult.length > 0) {
+      console.log(`user name: ${queryResult[0].username}`)
       bcrypt.compare(
         password,
         queryResult[0].password,
         (err, compareResult) => {
           if (compareResult) {
+            console.log(`logged in: ${queryResult[0].username}`)
             req.session.loggedIn = true;
             req.session.user_id = queryResult[0].user_id;
             req.session.username = queryResult[0].username;
@@ -169,9 +171,8 @@ app.post("/api/login", urlencodedParser, function (req, res) {
             req.session.gender = queryResult[0].gender;
             req.session.location = queryResult[0].location;
             req.session.quote = queryResult[0].quote;
-            res.status(200).send({
-              result: "Successfully logged in.",
-            });
+            console.log(`logged in: ${req.session.username}`);
+            res.redirect("/dashboard");
           } else {
             res.status(400).send({
               result: "Failed",
@@ -191,6 +192,7 @@ app.post("/api/login", urlencodedParser, function (req, res) {
 
 app.get("/api/logout", function (req, res) {
   if (req.session) {
+    console.log(req.session);
     req.session.destroy(function (error) {
       if (error) {
         res.status(400).send({
