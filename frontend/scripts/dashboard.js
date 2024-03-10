@@ -60,8 +60,13 @@ async function renderTodayProgress() {
     $("#today_goals").html(todayGoalsDiv);
   } else {
     const todayGoalsDiv = `
-    <section id="fifth-section" class="tag today_goal">
-      <h2><span class="title_underline">Let's start a challenge!</span></h2>
+    <section id="fifth-section" class="tag today_goal" style="display: flex; flex-direction: column; justify-content: center; padding-bottom: 50px; text-align: center">
+      <a href="details.html"><img src="./images/detail_button.png" class="detail_button"></a>
+      <h2>
+        <span class="title_underline">You don't have any active challenge now.
+        <br>
+        Let's start a challenge!</span>
+      </h2>
     </section>
     `;
     $("#today_goals").html(todayGoalsDiv);
