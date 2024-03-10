@@ -473,9 +473,7 @@ app.post("/api/setComment", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
   if (!req.session.loggedIn) {
     const now = new Date();
-    //TODO: Change it to session userID
-    // const userID = req.session.user_id;
-    const userID = 3;
+    const userID = req.session.user_id;
     let query =
       "INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES?";
     let recordValues = [
