@@ -7,7 +7,6 @@ const test = $('#wrapper')
 const challenge_ids = [1,2]
 const progress_ids = [1,2, 3, 8, 10, 11, 12, 13]
 
-const section = `<section><h1>Challenge Title</h1><p>Challenge Description</p><p>Challenge Item</p></section>`
 
 ;(async ()=> {
     const challengeData = []
