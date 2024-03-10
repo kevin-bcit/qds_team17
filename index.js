@@ -21,14 +21,29 @@ app.use(express.static(__dirname + "/frontend"));
 app.use(cors());
 
 // Session setup
-// todo: Change this one (or not...)
-const node_session_secret = process.env.NODE_SESSION_SECRET;
+const mySqlStore = require("express-mysql-session")(session);
+const options = {
+  connectionLimit: 10,
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  database: process.env.MYSQL_DATABASE,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  createDatabaseTable: true,
+};
+const sessionStore = new mySqlStore(options);
 app.use(
   session({
+    name: "QDSSession",
     secret: process.env.NODE_SESSION_SECRET,
-    name: "SWSession",
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      secure: false,
+      sameSite: true,
+    },
   })
 );
 
@@ -67,6 +82,7 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/dashboard", reqLogin, function (req, res) {
+  console.log(req.session.username);
   let doc = fs.readFileSync("./frontend/dashboard.html", "utf8");
   res.send(doc);
 });
@@ -443,8 +459,7 @@ app.post("/api/setComment", urlencodedParser, function (req, res) {
 });
 
 app.get("/api/getComment", urlencodedParser, function (req, res) {
-  let query = 
-  `SELECT c.*, u.username 
+  let query = `SELECT c.*, u.username 
   FROM comment c
   JOIN user u ON c.commentor_id = u.user_id
   WHERE c.progress_id = :progress_id;`;
@@ -456,7 +471,7 @@ app.get("/api/getComment", urlencodedParser, function (req, res) {
       res.status(200).send({
         result: "Success",
         msg: "Sucessfully found comments.",
-        data: result
+        data: result,
       });
     } else {
       res.status(400).send({
