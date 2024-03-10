@@ -81,7 +81,6 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/dashboard", reqLogin, function (req, res) {
-  console.log(req.session.username);
   let doc = fs.readFileSync("./frontend/dashboard.html", "utf8");
   res.send(doc);
 });
@@ -134,7 +133,7 @@ app.post("/api/signup", urlencodedParser, function (req, res) {
         msg: "Failed to create account.",
       });
     } else {
-      res.redirect('/login');
+      res.redirect("/login");
     }
   });
 });
@@ -155,13 +154,13 @@ app.post("/api/login", urlencodedParser, function (req, res) {
 
   databasePool.query(query, params, (err, queryResult) => {
     if (queryResult != null && queryResult.length > 0) {
-      console.log(`user name: ${queryResult[0].username}`)
+      console.log(`user name: ${queryResult[0].username}`);
       bcrypt.compare(
         password,
         queryResult[0].password,
         (err, compareResult) => {
           if (compareResult) {
-            console.log(`logged in: ${queryResult[0].username}`)
+            console.log(`logged in: ${queryResult[0].username}`);
             req.session.loggedIn = true;
             req.session.user_id = queryResult[0].user_id;
             req.session.username = queryResult[0].username;
@@ -192,7 +191,6 @@ app.post("/api/login", urlencodedParser, function (req, res) {
 
 app.get("/api/logout", function (req, res) {
   if (req.session) {
-    console.log(req.session);
     req.session.destroy(function (error) {
       if (error) {
         res.status(400).send({
@@ -282,7 +280,7 @@ app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
       SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
       SUM(completed_amount / target = 1)
     ) % 10 AS numOfApple,
-      FLOOR((
+    FLOOR((
       SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
       SUM(completed_amount / target = 1)
     ) / 10) AS numOfApplePie
@@ -318,7 +316,7 @@ app.get("/api/getAllChallengeInfo", urlencodedParser, function (req, res) {
       res.status(200).send({
         result: "Success",
         msg: "Sucessfully found challenge.",
-        data: result
+        data: result,
       });
     } else {
       res.status(400).send({
@@ -395,7 +393,7 @@ app.post("/api/createProgress", urlencodedParser, function (req, res) {
 
 app.post("/api/updateProgress", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  if (!req.session.loggedIn) {
+  if (req.session.loggedIn) {
     const now = new Date();
 
     let query =

@@ -34,20 +34,27 @@ async function renderTodayProgress() {
     let todayGoalsDiv = "";
     for (let i = 0; i < todayProgress.data.length; i++) {
       const progress = todayProgress.data[i];
+      if (progress.completed_amount >= progress.target) {
+        continue;
+      }
       todayGoalsDiv += `
-      <section id="fifth-section" class="tag today_goal">
-        <article class="event_icon">
-          <img src=${icons[progress.item.replace(" ", "")]}>
-        </article>
-        <article>
-            <a href="details.html"><img src="./images/detail_button.png" class="detail_button"></a>
-            <h2><span class="title_underline">${progress.title}</span></h2>
-            <p>${progress.target - progress.completed_amount} ${
-        progress.unit
-      }(s) left!</p>
-            ${i == todayProgress.data.length - 1 ? add_button : ""}
-        </article>
-      </section>
+      <div id="progress_${progress.progress_id}">
+        <section id="fifth-section" class="tag today_goal" >
+          <article class="event_icon">
+            <img src=${icons[progress.item.replace(" ", "")]}>
+          </article>
+          <article>
+              <a href="details.html"><img src="./images/detail_button.png" class="detail_button"></a>
+              <h2><span class="title_underline">${progress.title}</span></h2>
+              <p><span id="left_${progress.progress_id}">${
+        progress.target - progress.completed_amount
+      }</span> ${progress.unit}(s) left!</p>
+            <a class="incrementButton" value=${progress.completed_amount} id=${
+        progress.progress_id
+      }><img src="./images/add_button.png" class="add_button"></a>
+          </article>
+        </section>
+      </div>
       `;
     }
     $("#today_goals").html(todayGoalsDiv);
@@ -55,11 +62,21 @@ async function renderTodayProgress() {
     const todayGoalsDiv = `
     <section id="fifth-section" class="tag today_goal">
       <h2><span class="title_underline">Let's start a challenge!</span></h2>
-      ${add_button}
     </section>
     `;
     $("#today_goals").html(todayGoalsDiv);
   }
+}
+
+async function incrementProgress() {
+  progressId = $(this).attr("id");
+  completedAmount = parseInt($(this).attr("value"));
+  newValue = parseInt($(`#left_${progressId}`).html()) - 1;
+  $(`#left_${progressId}`).html(newValue);
+  if (newValue == 0) {
+    $(`#progress_${progressId}`).hide();
+  }
+  await updateProgress(progressId, completedAmount + 1);
 }
 
 async function setup() {
@@ -68,6 +85,7 @@ async function setup() {
   renderQuote();
   renderRewardStatus(myInfo.userID);
   renderTodayProgress();
+  $("body").on("click", ".incrementButton", incrementProgress);
 }
 
 $(document).ready(setup);
