@@ -418,7 +418,11 @@ app.post("/api/updateProgress", urlencodedParser, function (req, res) {
 });
 
 app.get("/api/getProgress", urlencodedParser, function (req, res) {
-  let query = `SELECT challenge_id, completed_amount, target FROM progress WHERE progress_id = :progress_id;`;
+  let query = `
+  SELECT p.challenge_id, p.completed_amount, p.target, u.user_id, u.username
+  FROM progress AS p
+  JOIN user AS u USING (user_id)
+  WHERE progress_id = :progress_id;`;
   let params = {
     progress_id: req.query.progress_id,
   };
@@ -429,6 +433,8 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
         msg: "Sucessfully found progress.",
         challengeId: result[0].challenge_id,
         percentageCompleteByDay: result[0].completed_amount / result[0].target,
+        userId: result[0].user_id,
+        username: result[0].username,
       });
     } else {
       res.status(400).send({
@@ -465,6 +471,35 @@ app.get("/api/getTodayProgress", urlencodedParser, function (req, res) {
     }
   });
 });
+
+app.get(
+  "/api/getAllUserLastTwoDaysProgress",
+  urlencodedParser,
+  function (req, res) {
+    let query = `
+  SELECT p.*, c.title, c.item, u.unit
+  FROM progress AS p
+  JOIN challenge AS c USING (challenge_id)
+  JOIN unit AS u USING (unit_id)
+  WHERE creation_date >= ADDDATE(CURDATE(), INTERVAL -2 DAY);
+  `;
+    databasePool.query(query, (err, result) => {
+      if (result != null && result.length > 0) {
+        res.status(200).send({
+          result: "Success",
+          msg: "Sucessfully found all users progress in these 2 days.",
+          data: result,
+        });
+      } else {
+        res.status(400).send({
+          result: "Failed",
+          msg: "All users progress in these 2 days not found.",
+          data: undefined,
+        });
+      }
+    });
+  }
+);
 
 // Comment API
 app.post("/api/setComment", urlencodedParser, function (req, res) {

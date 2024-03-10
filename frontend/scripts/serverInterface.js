@@ -54,9 +54,7 @@ async function getOtherUserInfoByName(username) {
 }
 
 async function getAllChallengeInfo() {
-  let res = await getRequest(
-    `/api/getAllChallengeInfo`
-  );
+  let res = await getRequest(`/api/getAllChallengeInfo`);
   console.log(res);
   return res;
 }
@@ -121,6 +119,12 @@ async function getComment(progress_id) {
 
 async function getTodayProgress() {
   let res = await getRequest(`/api/getTodayProgress`);
+  console.log(res);
+  return res;
+}
+
+async function getAllUserLastTwoDaysProgress() {
+  let res = await getRequest(`/api/getAllUserLastTwoDaysProgress`);
   console.log(res);
   return res;
 }
