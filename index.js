@@ -411,6 +411,31 @@ app.get("/api/getProgress", urlencodedParser, function (req, res) {
 });
 
 
+app.get("/api/getQuote", urlencodedParser, function (req, res) {
+  let query = `
+  SELECT user_id, username, quote
+  FROM user
+  ORDER BY RAND()
+  LIMIT 1;
+  `;
+  databasePool.query(query, (err, result) => {
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Sucessfully got a quote.",
+        userId: result[0].user_id,
+        username: result[0].username,
+        quote: result[0].quote,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Quote not found.",
+      });
+    }
+  });
+});
+
 //#end region API
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
