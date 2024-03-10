@@ -260,6 +260,44 @@ app.get("/api/getUserInfo", urlencodedParser, function (req, res) {
   }
 });
 
+app.get("/api/getRewardStatus", urlencodedParser, function (req, res) {
+  let query = `
+  SELECT
+    user_id AS userId,
+    (
+      SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
+      SUM(completed_amount / target = 1)
+    ) % 10 AS numOfApple,
+      FLOOR((
+      SUM(completed_amount / target >= 0.8 AND completed_amount / target < 1) * 0.5 +
+      SUM(completed_amount / target = 1)
+    ) / 10) AS numOfApplePie
+  FROM progress
+  WHERE user_id = :userId
+  GROUP BY user_id;
+  `;
+  let params = {
+    userId: req.query.userId,
+  };
+  databasePool.query(query, params, (err, result) => {
+    console.log(result);
+    if (result != null && result.length > 0) {
+      res.status(200).send({
+        result: "Success",
+        msg: "Successfully got reward status.",
+        userId: result[0].userId,
+        numOfApple: result[0].numOfApple,
+        numOfApplePie: result[0].numOfApplePie,
+      });
+    } else {
+      res.status(400).send({
+        result: "Failed",
+        msg: "Failed to get reward status.",
+      });
+    }
+  });
+});
+
 //#end region API
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
