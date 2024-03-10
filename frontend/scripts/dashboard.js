@@ -44,7 +44,7 @@ async function renderTodayProgress() {
             <h2><span class="title_underline">${progress.title}</span></h2>
             <p>${progress.target - progress.completed_amount} ${
         progress.unit
-      } left!</p>
+      }(s) left!</p>
             ${i == todayProgress.data.length - 1 ? add_button : ""}
         </article>
       </section>
