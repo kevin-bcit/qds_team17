@@ -466,6 +466,35 @@ app.get("/api/getTodayProgress", urlencodedParser, function (req, res) {
   });
 });
 
+app.get(
+  "/api/getAllUserLastTwoDaysProgress",
+  urlencodedParser,
+  function (req, res) {
+    let query = `
+  SELECT p.*, c.title, c.item, u.unit
+  FROM progress AS p
+  JOIN challenge AS c USING (challenge_id)
+  JOIN unit AS u USING (unit_id)
+  WHERE creation_date >= ADDDATE(CURDATE(), INTERVAL -2 DAY);
+  `;
+    databasePool.query(query, (err, result) => {
+      if (result != null && result.length > 0) {
+        res.status(200).send({
+          result: "Success",
+          msg: "Sucessfully found all users progress in these 2 days.",
+          data: result,
+        });
+      } else {
+        res.status(400).send({
+          result: "Failed",
+          msg: "All users progress in these 2 days not found.",
+          data: undefined,
+        });
+      }
+    });
+  }
+);
+
 // Comment API
 app.post("/api/setComment", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
