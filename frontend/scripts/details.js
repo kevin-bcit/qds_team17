@@ -1,9 +1,9 @@
 const imagesName = {
-    "Water": "s_water.png",
-    "Sleep": "s_sleep.png",
-    "Fitness": "s_fitness.png",
-    "Deep Breathing": "s_breath.png",
-    "Meditation": "s_meditation.png",
+    "Daily Water Intake Challenge": "s_water.png",
+    "Daily Sleep Hours Challenge": "s_sleep.png",
+    "Daily Fitness Challenge": "s_fitness.png",
+    "Daily Deep Breathing Challenge": "s_breath.png",
+    "Daily Meditation Challenge": "s_meditation.png",
 }
 function getRequest(url) {
   return new Promise((resolve) => {
@@ -26,7 +26,6 @@ async function getAllChallengeInfo() {
 async function displayCard() {
   const res = await getAllChallengeInfo();
   const challenges = JSON.parse(res).data;
-  console.log(challenges);
   const mainElement = document.getElementById("details-main");
 
   let cards = "";
@@ -42,7 +41,7 @@ async function displayCard() {
         <p>${description}</p>
     </article>
     <article>
-        <a><img src="./images/add_button.png" class="add_button"></a>
+        <a><img src="./images/x.png" class="add_button" id="button${i}"></a>
     </article>
     </section>`;
 
@@ -50,6 +49,14 @@ async function displayCard() {
   }
 
   mainElement.innerHTML = cards;
+
+  // Add click event listeners for the add buttons to toggle the image
+  challenges.forEach((_, index) => {
+    document.getElementById(`button${index}`).addEventListener('click', function() {
+      this.src = this.src.includes('x.png') ? './images/v.png' : './images/x.png';
+    });
+  });
 }
 
 displayCard();
+
