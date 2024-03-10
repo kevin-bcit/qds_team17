@@ -64,7 +64,9 @@ async function renderTodayProgress() {
               ${progress.unit}(s) left!
             </p>
 
-            <a class="incrementButton" value=${progress.completed_amount} id=${progress.progress_id}>
+            <a class="incrementButton" value=${progress.completed_amount} id=${
+        progress.progress_id
+      }>
               <img src="./images/add_button.png" class="add_button">
             </a>
           </article>
@@ -93,16 +95,19 @@ async function renderTodayProgress() {
 async function incrementProgress() {
   progressId = $(this).attr("id");
   completedAmount = parseInt($(this).attr("value"));
-  newValue = parseInt($(`#left_${progressId}`).html()) - 1;
-  $(`#left_${progressId}`).html(newValue);
+  await updateProgress(progressId, completedAmount + 1).then(() => {
+    newValue = parseInt($(`#left_${progressId}`).html()) - 1;
+    $(`#left_${progressId}`).html(newValue);
+  });
   if (newValue == 0) {
     $(`#progress_${progressId}`).hide();
+    const myInfo = $.parseJSON(await getUserInfo());
+    renderRewardStatus(myInfo.userID);
   }
-  await updateProgress(progressId, completedAmount + 1);
 }
 
 async function setup() {
-  let myInfo = $.parseJSON(await getUserInfo());
+  const myInfo = $.parseJSON(await getUserInfo());
   $("#username").html(myInfo.username);
   renderQuote();
   renderRewardStatus(myInfo.userID);
