@@ -1,5 +1,4 @@
 const apiUrl = 'http://localhost:3000';
-const endpointChallenge = '/api/getChallengeInfo';
 const endpointProgress = '/api/getProgress'
 const endpointComment = '/api/getComment'
 const endpointUser = '/api/getUserInfo'
@@ -19,12 +18,42 @@ picNum = Math.floor(Math.random() * 7) + 1
 console.log(`progress_id=${selectedChallenge}`)
 console.log(`progress_id=${selectedProgress}`)
 
+function postRequest(url, data) {
+    return new Promise((resolve) => {
+      let xmlHttp = new XMLHttpRequest();
+  
+      xmlHttp.open("POST", url, true);
+      xmlHttp.setRequestHeader("Content-type", "application/json");
+  
+      xmlHttp.onload = function () {
+        resolve(xmlHttp.response);
+      };
+  
+      xmlHttp.send(JSON.stringify(data));
+    });
+  }
+
+async function sendComment() {
+    const inputElement = document.getElementById('commentContent');
+    const commentValue = inputElement.value;
+    console.log(commentValue);
+    console.log(selectedProgress);
+
+    let res = await postRequest("/api/setComment", {
+      progress_id: commentValue,
+      content: selectedProgress,
+    });
+    console.log(res);
+  }
+
 ;(async ()=> {
     
     // const cres = await fetch(`${apiUrl}${endpointChallenge}?challengeId=${selectedChallenge}`)
     // const cdata = await cres.json()
     const pres = await fetch(`${apiUrl}${endpointProgress}?progress_id=${selectedProgress}`)
     const pdata = await pres.json()
+    console.log(pdata);
+    let username = pdata.username
 
     sectionBlock = `<section class="community-section" class="tag">
         <article>

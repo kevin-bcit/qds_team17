@@ -34,31 +34,11 @@
             </main>
             <div>
                 <section class="comment-add-section" class="fadein_img">
-                    <article>
+                    <article style="display: flex; align-items: center;">
                         <figure><img src="./images/cat6.jpg"></img></figure>
-                        <h2>add a comment to support...</h2>
-                        <a class="comment-add-icon" href=""><img id="comment-add-btn" src="./images/vector.png" alt="add-comment"/></a>
+                        <input type="text"  id="commentContent" placeholder="add a comment to support..." style="flex: 1; padding: 5px;">
+                        <a class="comment-add-icon" href=""><img id="comment-add-btn" src="./images/vector.png" alt="add-comment" onclick="sendComment()"/></a>
                     </article>
-                </section>
-                <!-- popup comment input-->
-                <section id="pop" class="pop-style">
-                    <h3>x</h3>
-                    <div id="pop-box" class="pop-box-style">
-                        <button class="close-pop">&#x2715;</button>
-                            <form action="http://localhost:3000/api/setComment" method="post" id="form_comment" class="placeholders">
-                                <div id="comment_input_group" class="input-label-group long-label">
-                                    <!-- <label for="username">Your name:</label>
-                                    <input type="text" name="username" id="username" /> -->
-                                    <label for="progress_id">Progrss ID:</label>
-                                    <input type="text" name="progress_id" id="progress_id" required="required" />
-                                    <label for="comment-task">What do you want to say?</label>
-                                    <textarea name="comment-task" id="comment-task" required="required"></textarea>
-                                </div>
-                                <input type="submit" value="Submit" />
-                            
-                            </form>
-                        <button class="close-pop">&#x2715;</button>
-                    </div>
                 </section>
             </div>
             <nav>

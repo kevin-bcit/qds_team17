@@ -356,7 +356,7 @@ app.get("/api/getChallengeInfo", urlencodedParser, function (req, res) {
 // Prgress API
 app.post("/api/createProgress", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  if (!req.session.loggedIn) {
+  if (req.session.loggedIn) {
     const user_id = req.body.userId;
     const challenge_id = req.body.challenge_id;
     const target = req.body.target;
@@ -365,23 +365,45 @@ app.post("/api/createProgress", urlencodedParser, function (req, res) {
     const creation_date = now.toISOString().slice(0, 10);
     const last_update_date = now.toISOString().slice(0, 19).replace("T", " ");
 
-    let query =
-      "INSERT INTO progress (user_id, challenge_id, target, completed_amount, creation_date, last_update_date) VALUES ?";
-    let recordValues = [
-      [
+    let query = `
+      INSERT INTO progress (
         user_id,
         challenge_id,
         target,
         completed_amount,
         creation_date,
-        last_update_date,
-      ],
-    ];
+        last_update_date
+      ) VALUES (
+        :user_id,
+        :challenge_id,
+        :target,
+        :completed_amount,
+        :creation_date,
+        :last_update_date
+      );
+      `;
+    let params = {
+      user_id: user_id,
+      challenge_id: challenge_id,
+      target: target,
+      completed_amount: completed_amount,
+      creation_date: creation_date,
+      last_update_date: last_update_date,
+    };
 
-    databasePool.query(query, recordValues);
-    res.send({
-      result: "Success",
-      msg: "Progress saved.",
+    databasePool.query(query, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send({
+          result: "Failed",
+          msg: "Failed to create progress.",
+        });
+      } else {
+        res.status(200).send({
+          result: "Success",
+          msg: "Progress created.",
+        });
+      }
     });
   } else {
     res.send({
@@ -504,24 +526,33 @@ app.get(
 // Comment API
 app.post("/api/setComment", urlencodedParser, function (req, res) {
   res.setHeader("Content-Type", "application/json");
-  if (!req.session.loggedIn) {
+  if (req.session.loggedIn) {
     const now = new Date();
     const userID = req.session.user_id;
-    let query =
-      "INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES?";
-    let recordValues = [
-      [
-        req.body.progress_id,
-        req.body.contet,
-        userID,
-        now.toISOString().slice(0, 19).replace("T", " "),
-      ],
-    ];
+    const query = `
+    INSERT INTO comment (progress_id, content, commentor_id, creation_date) VALUES (:progress_id, :content, :commentor_id, :creation_date);
+    `;
+    const params = {
+      progress_id: req.body.progress_id,
+      content: req.body.content,
+      commentor_id: userID,
+      creation_date: now.toISOString().slice(0, 19).replace("T", " "),
+    };
 
-    databasePool.query(query, params);
-    res.send({
-      result: "Success",
-      msg: "Comment updated.",
+    databasePool.query(query, params, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send({
+          result: "Failed",
+          msg: "Failed to create comment.",
+        });
+      } else {
+        res.status(200).send({
+          result: "Success",
+          msg: "Comment created.",
+          data: result,
+        });
+      }
     });
   } else {
     res.send({
