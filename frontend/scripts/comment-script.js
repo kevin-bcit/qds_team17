@@ -1,31 +1,32 @@
 const apiUrl = 'http://localhost:3000';
-const endpointChallenge = '/api/getChallengeInfo';
+// const endpointChallenge = '/api/getChallengeInfo';
 const endpointProgress = '/api/getProgress'
 const endpointComment = '/api/getComment'
 const endpointUser = '/api/getUserInfo'
 
-const main = $('#comment-main')
-const challenge_id = 1
-const progress_ids = [1,2, 3, 8, 10, 11, 12, 13]
+const main = $('#comment-main');
+const picNum = Math.floor(Math.random() * 7) + 1
+const support = [
+    "Almost halfway in collecting today’s apple. Wish me luck everyone!",
+    "Argh! Almost done all of deep breathing exercises for today...",
+    "Lets go!!! Just collected another apple today. 6th pie incoming!",
+  ];
 
-
-const selectedProgress = progress_ids[Math.floor(Math.random() * progress_ids.length)]
-picNum = Math.floor(Math.random() * 7) + 1
-
+const selectedProgress = new URLSearchParams(window.location.search).get('paramName');
 console.log(`progress_id=${selectedProgress}`)
 
 ;(async ()=> {
     
-    const cres = await fetch(`${apiUrl}${endpointChallenge}?challengeId=${challenge_id}`)
-    const cdata = await cres.json()
     const pres = await fetch(`${apiUrl}${endpointProgress}?progress_id=${selectedProgress}`)
     const pdata = await pres.json()
+    console.log(pdata);
+    let username = pdata.username
 
     sectionBlock = `<section class="community-section" class="tag">
         <article>
             <figure><img src="./images/cat${picNum}.jpg"></img><figcaption>lifetime pies</figcaption></figure>
-            <span class="community-title">${cdata.title}</span><span class="community-time">2 days 5 hours</span>
-            <p>${cdata.description}</p>
+            <span class="community-title">${username}</span><span class="community-time">2 days 5 hours</span>
+            <p>${support[Math.floor(Math.random() * support.length)]}</p>
             
         </article>
         <article class="community-progress">
